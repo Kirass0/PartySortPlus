@@ -282,7 +282,6 @@ public unsafe class PartySortPlus: IDalamudPlugin
                 {
                     targetOrder.Add(currentJobsSnapshot[i]);
                     used[i] = true;
-                    break;
                 }
             }
         }
