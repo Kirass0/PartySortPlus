@@ -160,7 +160,7 @@ public unsafe class PartySortPlus: IDalamudPlugin
                             }
                         }
                     }
-                    if (ForceUpdate || (SoftForceUpdate && newRule.Count > 0))
+                    if ((ForceUpdate || (SoftForceUpdate && newRule.Count > 0)) && isPartyListReady())
                     {
                         SoftForceUpdate = false;
                         ForceUpdate = false;
@@ -370,5 +370,11 @@ public unsafe class PartySortPlus: IDalamudPlugin
 
         indices.Sort();
         return indices;
+    }
+    private bool isPartyListReady()
+    {
+        var partyMemberCount = AgentHUD.Instance()->PartyMemberCount;
+        int otherCount = (int)InfoProxyPartyMember.Instance()->GetEntryCount();
+        return partyMemberCount == otherCount ? true : false;
     }
 }
