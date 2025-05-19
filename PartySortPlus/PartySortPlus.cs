@@ -1,22 +1,27 @@
 using Dalamud.Plugin;
-using ECommons.SimpleGui;
-using ECommons.Configuration;
-using PartySortPlus.Configuration;
-using ECommons.Automation.LegacyTaskManager;
 using ECommons;
+using ECommons.Automation.LegacyTaskManager;
+using ECommons.Configuration;
 using ECommons.DalamudServices;
-using System;
-using ECommons.Schedulers;
-using ECommons.Logging;
-using System.IO.Compression;
-using System.IO;
-using PartySortPlus.GUI;
+using ECommons.ExcelServices;
 using ECommons.EzEventManager;
 using ECommons.GameHelpers;
-using System.Collections.Generic;
+using ECommons.Logging;
+using ECommons.Schedulers;
+using ECommons.SimpleGui;
+using FFXIVClientStructs.FFXIV.Client.Game.Group;
+using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using FFXIVClientStructs.FFXIV.Client.UI.Agent;
-using System.Linq;
 using FFXIVClientStructs.FFXIV.Client.UI.Info;
+using PartySortPlus.Configuration;
+using PartySortPlus.GUI;
+using Serilog;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PartySortPlus;
 
@@ -295,10 +300,9 @@ public unsafe class PartySortPlus: IDalamudPlugin
 
         for (int i = 0; i < targetOrder.Count; i++)
         {
-            var currentJobs = GetPartyMemberJobs();
-            var currentIndices = GetPartyMemberJobsByIndex();
+            PluginLog.Debug($"i: {i}, Current Jobs: {string.Join(", ", currentJobsSnapshot)}");
 
-            if (currentJobs[i].Equals(targetOrder[i], StringComparison.OrdinalIgnoreCase))
+            if (currentJobsSnapshot[i].Equals(targetOrder[i], StringComparison.OrdinalIgnoreCase))
             {
                 continue;
             }
@@ -306,7 +310,7 @@ public unsafe class PartySortPlus: IDalamudPlugin
             int swapIndex = -1;
             for (int j = i + 1; j < partyCount; j++)
             {
-                if (currentJobs[j].Equals(targetOrder[i], StringComparison.OrdinalIgnoreCase))
+                if (currentJobsSnapshot[j].Equals(targetOrder[i], StringComparison.OrdinalIgnoreCase))
                 {
                     swapIndex = j;
                     break;
@@ -318,9 +322,17 @@ public unsafe class PartySortPlus: IDalamudPlugin
                 continue;
             }
 
-            PluginLog.Information($"Swapping {currentJobs[swapIndex]} (index {currentIndices[swapIndex]}) into position {i}");
-            InfoProxyPartyMember.Instance()->ChangeOrder(currentIndices[swapIndex], i);
+            PluginLog.Information($"Swapping {currentJobsSnapshot[swapIndex]} (index {swapIndex}) into position {i}");
+            InfoProxyPartyMember.Instance()->ChangeOrder(swapIndex, i);
+            Swap(currentJobsSnapshot, swapIndex, i);
         }
+    }
+
+    private static void Swap<T>(List<T> list, int indexA, int indexB)
+    {
+        T tmp = list[indexA];
+        list[indexA] = list[indexB];
+        list[indexB] = tmp;
     }
 
     private List<string> GetPartyMemberJobs()
