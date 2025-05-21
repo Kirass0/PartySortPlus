@@ -367,8 +367,19 @@ public unsafe class PartySortPlus: IDalamudPlugin
     }
     private bool isPartyListReady()
     {
-        var partyMemberCount = AgentHUD.Instance()->PartyMemberCount;
-        int otherCount = (int)InfoProxyPartyMember.Instance()->GetEntryCount();
-        return partyMemberCount == otherCount ? true : false;
+        int partyMemberCount = getPartyMemberObjectsCount();
+        int proxyPartyMemberCount = (int)InfoProxyPartyMember.Instance()->GetEntryCount();
+        return partyMemberCount == proxyPartyMemberCount ? true : false;
+    }
+
+    private int getPartyMemberObjectsCount()
+    {
+        int count = 0;
+        foreach (ref var partyMember in AgentHUD.Instance()->PartyMembers)
+        {
+            if (partyMember.Object != null && partyMember.ContentId != 0)
+                count++;
+        }
+        return count;
     }
 }
