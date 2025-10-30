@@ -1,0 +1,26 @@
+[
+{
+  "Author": "Rietty",
+  "Name": "Party Sort+",
+  "InternalName": "PartySortPlus",
+  "AssemblyVersion": "1.0.0.0",
+  "Description": "Sort your party list according to a series of rules built on top of the game's default system. Allowing you to specify based off Duty Instances and Jobs!",
+  "ApplicableVersion": "any",
+  "Tags": [
+    "Party List",
+    "Sorting",
+    "Client Sided",
+    "Rule-based"
+  ],
+  "DalamudApiLevel": 13,
+  "LoadRequiredState": 0,
+  "LoadSync": false,
+  "CanUnloadAsync": false,
+  "LoadPriority": 0,
+  "Punchline": "Never worry about sorting your party again!",
+  "AcceptsFeedback": true,
+  "DownloadLinkInstall": "https://github.com/Kirass0/PartySortPlus/releases/latest/download/latest.zip",
+  "DownloadLinkTesting": "https://github.com/Kirass0/PartySortPlus/releases/latest/download/latest.zip",
+  "DownloadLinkUpdate": "https://github.com/Kirass0/PartySortPlus/releases/latest/download/latest.zip"
+}
+]
