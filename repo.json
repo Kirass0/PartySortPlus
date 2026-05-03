@@ -3,7 +3,7 @@
   "Author": "Rietty",
   "Name": "Party Sort+",
   "InternalName": "PartySortPlusFix",
-  "AssemblyVersion": "1.0.0.1",
+  "AssemblyVersion": "1.0.0.2",
   "Description": "Never worry about sorting your party again!",
   "ApplicableVersion": "any",
   "Tags": [
@@ -12,7 +12,7 @@
     "Client Sided",
     "Rule-based"
   ],
-  "DalamudApiLevel": 14,
+  "DalamudApiLevel": 15,
   "LoadRequiredState": 0,
   "LoadSync": false,
   "CanUnloadAsync": false,
